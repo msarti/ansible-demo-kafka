@@ -1,0 +1,7 @@
+- hosts: "{{ target }}" 
+  remote_user: root
+  tasks:
+    - name: Installazione java
+      yum:
+        name: java-1.8.0-openjdk
+        state: present

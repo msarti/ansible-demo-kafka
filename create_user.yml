@@ -1,0 +1,9 @@
+- hosts: "{{ target }}" 
+  remote_user: root
+  tasks:
+    - name: Creazione utente
+      user:
+        name: "{{ user_name }}"
+        create_home: yes
+        
+ 

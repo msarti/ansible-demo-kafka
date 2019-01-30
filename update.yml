@@ -1,0 +1,16 @@
+- hosts: "{{ target }}" 
+  remote_user: root
+  tasks:
+    - name: update di tutti i pacchetti
+      yum:
+        name: '*'
+        state: latest
+      register: update
+    - name: Check for reboot hint.
+      shell: LAST_KERNEL=$(rpm -q --last kernel | awk 'NR==1{sub(/kernel-/,""); print $1}'); CURRENT_KERNEL=$(uname -r); if [ $LAST_KERNEL != $CURRENT_KERNEL ]; then echo 'reboot'; else echo 'no'; fi
+      ignore_errors: true
+      register: reboot_hint
+    - name: schedulo il reboot
+      reboot:
+      when: reboot_hint.stdout.find("reboot") != -1
+      

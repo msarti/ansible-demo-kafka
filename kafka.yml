@@ -1,0 +1,12 @@
+- hosts: "{{ target }}" 
+  remote_user: root
+- import_playbook: update.yml
+- import_playbook: disable_selinux.yml
+- import_playbook: java8.yml
+- import_playbook: create_user.yml
+  vars:
+    user_name: kafka
+- import_playbook: get_kafka.yml
+  vars:
+    kafka_version: "2.1.0"
+

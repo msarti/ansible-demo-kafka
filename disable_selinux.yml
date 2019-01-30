@@ -1,0 +1,13 @@
+- hosts: "{{target}}"
+  remote_user: root
+  tasks:
+  - name: Disabilito selinux
+    selinux:
+      state: disabled
+    register: selinux
+  - name: schedulo il reboot
+    command: shutdown --reboot "{{rebootTime}}"
+    when: selinux.changed
+  - name: schedulo il reboot
+    reboot:
+    when: selinux.changed
